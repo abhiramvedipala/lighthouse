@@ -1,0 +1,50 @@
+session started user=u00001 ip=10.0.0.1	session started user=<*> ip=<*>
+deploy rolling restart version=89abcdef pod=21	deploy rolling restart version=<*> pod=<*>
+order created order=ORD-9876543 user=u99999 items=1	order created order=<*> user=<*> items=<*>
+database timeout after 1750ms order=ORD-0033333 OperationalError	database timeout after <*>ms order=<*> OperationalError
+Receiving block blk_blk_5792489080791696128 src: /10.251.107.50:47233 dest: /10.251.107.50:50010	Receiving block blk_<*> src: /<*> dest: /<*>
+cache miss for sku=SKU-09999 falling back to database	cache miss for sku=<*> falling back to database
+database timeout after 1200ms order=ORD-0055555 OperationalError	database timeout after <*>ms order=<*> OperationalError
+deploy rolling restart version=deadbeef pod=3	deploy rolling restart version=<*> pod=<*>
+order created order=ORD-0012345 user=u00123 items=3	order created order=<*> user=<*> items=<*>
+request handled GET /products status=200 latency_ms=61 client=10.77.1.2	request handled GET /products status=<*> latency_ms=<*> client=<*>
+deploy rolling restart version=a1b2c3d4 pod=12	deploy rolling restart version=<*> pod=<*>
+session started user=u54321 ip=10.20.30.40	session started user=<*> ip=<*>
+cache miss for sku=SKU-01737 falling back to database	cache miss for sku=<*> falling back to database
+deploy rolling restart version=cafebabe pod=44	deploy rolling restart version=<*> pod=<*>
+order created order=ORD-5555555 user=u31337 items=2	order created order=<*> user=<*> items=<*>
+cache miss for sku=SKU-04450 falling back to database	cache miss for sku=<*> falling back to database
+request handled GET /products status=200 latency_ms=52 client=10.3.3.3	request handled GET /products status=<*> latency_ms=<*> client=<*>
+Receiving block blk_blk_7503483334202473044 src: /10.250.10.6:40524 dest: /10.250.10.6:50010	Receiving block blk_<*> src: /<*> dest: /<*>
+database timeout after 3000ms order=ORD-0044444 OperationalError	database timeout after <*>ms order=<*> OperationalError
+request handled GET /products status=200 latency_ms=45 client=10.4.8.19	request handled GET /products status=<*> latency_ms=<*> client=<*>
+Receiving block blk_blk_-3544583377289625738 src: /10.251.43.115:57311 dest: /10.251.43.115:50010	Receiving block blk_<*> src: /<*> dest: /<*>
+config reloaded revision=abcdef01	config reloaded revision=<*>
+retrying upstream call to orders attempt=2 after 200ms	retrying upstream call to orders attempt=<*> after <*>ms
+config reloaded revision=0a1b2c3d	config reloaded revision=<*>
+session started user=u12345 ip=10.200.100.50	session started user=<*> ip=<*>
+session started user=u77777 ip=10.5.5.5	session started user=<*> ip=<*>
+request handled GET /products status=200 latency_ms=38 client=10.9.200.5	request handled GET /products status=<*> latency_ms=<*> client=<*>
+circuit open for inventory after 7 failures	circuit open for inventory after <*> failures
+session started user=u00999 ip=10.1.2.3	session started user=<*> ip=<*>
+cache miss for sku=SKU-00012 falling back to database	cache miss for sku=<*> falling back to database
+retrying upstream call to orders attempt=1 after 150ms	retrying upstream call to orders attempt=<*> after <*>ms
+retrying upstream call to orders attempt=3 after 400ms	retrying upstream call to orders attempt=<*> after <*>ms
+circuit open for inventory after 10 failures	circuit open for inventory after <*> failures
+order created order=ORD-0000042 user=u00007 items=12	order created order=<*> user=<*> items=<*>
+order created order=ORD-1234567 user=u00456 items=8	order created order=<*> user=<*> items=<*>
+config reloaded revision=84d74323	config reloaded revision=<*>
+database timeout after 2000ms order=ORD-0022222 OperationalError	database timeout after <*>ms order=<*> OperationalError
+circuit open for inventory after 3 failures	circuit open for inventory after <*> failures
+Receiving block blk_blk_-1608999687919862906 src: /10.250.19.102:54106 dest: /10.250.19.102:50010	Receiving block blk_<*> src: /<*> dest: /<*>
+circuit open for inventory after 12 failures	circuit open for inventory after <*> failures
+Receiving block blk_blk_-8014372516433022713 src: /10.250.14.224:38921 dest: /10.250.14.224:50010	Receiving block blk_<*> src: /<*> dest: /<*>
+deploy rolling restart version=01234567 pod=8	deploy rolling restart version=<*> pod=<*>
+circuit open for inventory after 5 failures	circuit open for inventory after <*> failures
+retrying upstream call to orders attempt=1 after 100ms	retrying upstream call to orders attempt=<*> after <*>ms
+config reloaded revision=12345678	config reloaded revision=<*>
+cache miss for sku=SKU-00001 falling back to database	cache miss for sku=<*> falling back to database
+request handled GET /products status=500 latency_ms=402 client=10.1.1.1	request handled GET /products status=<*> latency_ms=<*> client=<*>
+retrying upstream call to orders attempt=2 after 250ms	retrying upstream call to orders attempt=<*> after <*>ms
+config reloaded revision=ffee1122	config reloaded revision=<*>
+database timeout after 1500ms order=ORD-0011111 OperationalError	database timeout after <*>ms order=<*> OperationalError
