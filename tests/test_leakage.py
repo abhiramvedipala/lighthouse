@@ -8,12 +8,13 @@ import numpy as np
 import pytest
 
 from lighthouse.data import Dataset, load_dataset
+from lighthouse.detectors.seasonal import SeasonalBaseline
 from lighthouse.detectors.static import StaticThreshold
 from lighthouse.detectors.zscore import RollingZScore
 from lighthouse.evaluate import Incident
 from lighthouse.thresholds import select_threshold
 
-DETECTORS = {"static_threshold": StaticThreshold, "rolling_zscore": RollingZScore}
+DETECTORS = {"static_threshold": StaticThreshold, "rolling_zscore": RollingZScore, "seasonal_baseline": SeasonalBaseline}
 
 
 def register(name, factory):
