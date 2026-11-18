@@ -5,4 +5,4 @@ Local mirror of the GitHub issues (the repo did not exist when this was built, s
 - #1 [feature] Phase 1: Traffic and log simulator (branch `phase-1/simulator`), status: fixed in PR-1
 - #2 [feature] Phase 1: Fault injector and labels (branch `phase-1/fault-injection`), status: fixed in PR-2
 - #3 [feature] Phase 1: Loghub download and parser benchmark harness (branch `phase-1/loghub-benchmark`), status: fixed in PR-3
-- #4 [feature] Phase 1: Template extraction and error signatures (branch `phase-1/drain-templates`), status: open
+- #4 [feature] Phase 1: Template extraction and error signatures (branch `phase-1/drain-templates`), status: fixed in PR-4
