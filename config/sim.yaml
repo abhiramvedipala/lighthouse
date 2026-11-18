@@ -1,0 +1,16 @@
+seed: 20261112
+start: "2026-10-05T00:00:00"   # a Monday, UTC
+days: 14
+rate_scale: 1.0                # the CI fixture uses a smaller scale
+info_sample: 20                # one INFO line per 20 requests
+base_error_rate: 0.003
+weekend_factor: 0.6
+peak_hour: 14
+noise_sd: 0.05                 # slow multiplicative rate noise (AR(1), log scale)
+endpoints:
+  # peak_rate is requests per minute at the daily peak on a weekday
+  - {service: gateway,   endpoint: "GET /products",    peak_rate: 200, p50_ms: 45,  sigma: 0.50}
+  - {service: gateway,   endpoint: "POST /checkout",   peak_rate: 40,  p50_ms: 110, sigma: 0.50}
+  - {service: orders,    endpoint: "POST /orders",     peak_rate: 40,  p50_ms: 85,  sigma: 0.50}
+  - {service: orders,    endpoint: "GET /orders/{id}", peak_rate: 60,  p50_ms: 40,  sigma: 0.50}
+  - {service: inventory, endpoint: "GET /stock/{sku}", peak_rate: 150, p50_ms: 30,  sigma: 0.45}

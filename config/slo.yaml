@@ -1,0 +1,10 @@
+# Per-endpoint SLOs. The static-threshold alert fires at error rate > 5 percent
+# or p95 > 2x p95_ms, sustained 5 minutes.
+gateway:
+  "GET /products": {p95_ms: 250, error_rate: 0.01}
+  "POST /checkout": {p95_ms: 500, error_rate: 0.01}
+orders:
+  "POST /orders": {p95_ms: 400, error_rate: 0.01}
+  "GET /orders/{id}": {p95_ms: 200, error_rate: 0.01}
+inventory:
+  "GET /stock/{sku}": {p95_ms: 150, error_rate: 0.01}
