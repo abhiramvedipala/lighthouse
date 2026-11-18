@@ -239,3 +239,14 @@ def incidents_from_labels(labels: dict, start, include_benign: bool = True) -> l
             e = int((pd.Timestamp(ev["end"]) - start) / pd.Timedelta("1min"))
             out.append(Incident(ev["id"], ev["type"], frozenset(a["service"] for a in ev["affected"]), s, e, benign))
     return sorted(out, key=lambda i: i.start)
+
+
+def main() -> None:
+    """python -m lighthouse.evaluate --all | --fixture"""
+    from lighthouse.report import main as report_main
+
+    report_main()
+
+
+if __name__ == "__main__":
+    main()
