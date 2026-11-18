@@ -4,6 +4,7 @@ The GitHub repo does not exist yet, so features are merged locally with `git mer
 
 ## Done
 - [x] Phase 1, PR-1 `phase-1/simulator`: Traffic and log simulator
+- [x] Phase 1, PR-2 `phase-1/fault-injection`: Fault injector and labels
 <!--done-->
 
 ## Needs me
