@@ -16,3 +16,4 @@ One entry per merged PR.
 - PR-9 Seasonal baseline detector: median/MAD per weekday-weekend 5-minute slot, one-sided robust z, per-series normaliser
 - PR-10 Fix lint error merged into main: wrap one long line that failed ruff on main
 - PR-11 Isolation Forest detector with ablations: per-service IF with residual/template/delta features, ablation switches, permutation importance
+- PR-12 Prophet residual detector: per-series Prophet on 5-minute bins, interval-width residual score, 12 s for 15 fits
