@@ -12,3 +12,4 @@ Local mirror of the GitHub issues (the repo did not exist when this was built, s
 - #8 [feature] Phase 2: Static threshold and rolling z-score detectors (branch `phase-2/baseline-detectors`), status: fixed in PR-8
 - #9 [feature] Phase 2: Seasonal baseline detector (branch `phase-2/seasonal-baseline`), status: fixed in PR-9
 - #10 [bug] Phase 2: Fix lint error merged into main (branch `phase-2/lint-fix`), status: fixed in PR-10
+- #11 [feature] Phase 2: Isolation Forest detector with ablations (branch `phase-2/isolation-forest`), status: open
