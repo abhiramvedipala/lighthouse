@@ -223,3 +223,19 @@ def point_adjusted_f1(flags: Mapping[str, np.ndarray], incidents: Sequence[Incid
     if tp == 0:
         return 0.0
     return _f1(tp / (tp + fp), tp / (tp + fn))
+
+
+def incidents_from_labels(labels: dict, start, include_benign: bool = True) -> list[Incident]:
+    """Convert labels.json (written by the simulator) to Incidents with minute indexes from `start`."""
+    import pandas as pd
+
+    start = pd.Timestamp(start)
+    out = []
+    for key, benign in (("faults", False), ("benign", True)):
+        if benign and not include_benign:
+            continue
+        for ev in labels.get(key, []):
+            s = int((pd.Timestamp(ev["start"]) - start) / pd.Timedelta("1min"))
+            e = int((pd.Timestamp(ev["end"]) - start) / pd.Timedelta("1min"))
+            out.append(Incident(ev["id"], ev["type"], frozenset(a["service"] for a in ev["affected"]), s, e, benign))
+    return sorted(out, key=lambda i: i.start)

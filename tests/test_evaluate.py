@@ -191,3 +191,20 @@ def test_point_adjust_still_penalises_false_positive_minutes():
 
 def test_point_adjust_is_zero_without_any_hit():
     assert point_adjusted_f1(flags(a=[500]), [inc("i", 100, 110)], WIN) == 0.0
+
+
+def test_incidents_from_labels_converts_times_and_services():
+    import json
+    from pathlib import Path
+
+    import pandas as pd
+
+    from lighthouse.evaluate import incidents_from_labels
+
+    labels = json.loads((Path(__file__).parent / "fixtures" / "sim2d" / "labels.json").read_text())
+    incs = incidents_from_labels(labels, pd.Timestamp("2026-10-05"))
+    assert len(incs) == len(labels["faults"]) + len(labels["benign"])
+    assert [i.start for i in incs] == sorted(i.start for i in incs)
+    outage = next(i for i in incs if i.type == "dependency_outage")
+    assert outage.services == {"inventory", "orders", "gateway"} and outage.end > outage.start
+    assert all(i.benign for i in incs if i.type in ("traffic_surge", "deploy"))
