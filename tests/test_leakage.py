@@ -19,7 +19,7 @@ DETECTORS = {
     "static_threshold": StaticThreshold,
     "rolling_zscore": RollingZScore,
     "seasonal_baseline": SeasonalBaseline,
-    "isolation_forest": IsolationForestDetector,
+    "isolation_forest": lambda: IsolationForestDetector(n_estimators=50),
 }
 
 

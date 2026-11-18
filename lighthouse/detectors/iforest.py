@@ -84,7 +84,7 @@ class IsolationForestDetector(Detector):
             use = ds.train_mask(svc).copy() if self.clean_train else np.zeros(ds.minutes, dtype=bool)
             if not self.clean_train:
                 use[lo:hi] = True
-            use[:min(WARMUP_MIN, hi)] = False
+            use[:lo + min(WARMUP_MIN, (hi - lo) // 3)] = False  # cold start; short windows lose only a third
             use[hi:] = False
             m = IsolationForest(n_estimators=self.n_estimators, contamination="auto", random_state=self.seed, n_jobs=4)
             self.models[unit] = m.fit(X.to_numpy(dtype=np.float32)[use])
