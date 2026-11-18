@@ -10,7 +10,7 @@ from lighthouse.sim.templates import TEMPLATES
 @pytest.fixture(scope="module")
 def sim():
     cfg = load_sim_config(days=1)
-    params, req, logs, _ = simulate(cfg)
+    params, req, logs, _ = simulate(cfg, faults=False)
     return cfg, req, logs
 
 
@@ -56,8 +56,8 @@ def test_logs_sorted_and_lines_carry_endpoint(sim):
 
 def test_same_seed_identical_logs():
     cfg = load_sim_config(days=1, rate_scale=0.2)
-    a = simulate(cfg)[2]
-    b = simulate(cfg)[2]
+    a = simulate(cfg, faults=False)[2]
+    b = simulate(cfg, faults=False)[2]
     assert a.equals(b)
 
 

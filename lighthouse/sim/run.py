@@ -13,13 +13,13 @@ from lighthouse.sim.logs import generate_logs
 from lighthouse.sim.traffic import build_params, sample_requests
 
 
-def simulate(cfg, faults: bool = False):
+def simulate(cfg, faults: bool = True):
     """Return (params, requests, logs, labels). Faults are applied when the module exists."""
     r_traffic, r_faults, r_logs = cfg.child_rngs()
     params = build_params(cfg, r_traffic)
     labels = {"faults": [], "benign": []}
     if faults:
-        from lighthouse.sim import faults as fmod  # added by the fault-injection feature
+        from lighthouse.sim import faults as fmod
 
         labels = fmod.inject(params, r_faults)
     req = sample_requests(params, r_logs)
@@ -45,12 +45,12 @@ def main() -> None:
     ap.add_argument("--config", default=None)
     ap.add_argument("--days", type=int, default=None)
     ap.add_argument("--rate-scale", type=float, default=None)
-    ap.add_argument("--faults", action="store_true", help="inject labeled faults")
+    ap.add_argument("--no-faults", action="store_true", help="clean traffic only")
     a = ap.parse_args()
     over = {k: v for k, v in (("days", a.days), ("rate_scale", a.rate_scale)) if v is not None}
     cfg = load_sim_config(a.config, **over)
     t0 = time.time()
-    _, req, logs, labels = simulate(cfg, faults=a.faults)
+    _, req, logs, labels = simulate(cfg, faults=not a.no_faults)
     write(Path(a.out), cfg, req, logs, labels)
     print(f"{len(req)} requests, {len(logs)} log lines, {len(labels['faults'])} faults in {time.time() - t0:.1f}s")
 
