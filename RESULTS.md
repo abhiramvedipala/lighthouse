@@ -32,3 +32,25 @@ The simulator row parses per service (D6), and `drain3@0.9` uses the simulator t
 Reading: the 0.9 target holds on HDFS (0.9975) and Apache (1.0). It does not hold on BGL (0.8535) and badly
 fails on OpenStack (0.2985), where the plain regex baseline beats Drain3 (0.4815). I did not tune on
 OpenStack. On the simulator the regex baseline ties Drain3 because the simulator's fields are easy to mask.
+
+## Simulator data and aggregation
+
+Command: `uv run python -m lighthouse.sim.run --out data/sim` (seed 20261112, 14 days from 2026-10-05).
+
+| Item | Value |
+|---|---|
+| Days, endpoints, services | 14, 5, 3 |
+| Requests | 5,288,170 |
+| Log lines | 657,184 (one INFO per 20 requests plus every WARN and ERROR) |
+| Faults | 40: latency_spike 8, error_burst 8, dependency_outage 4, latency_drift 6, traffic_drop 6, novel_error 8 |
+| Benign events | 6: traffic_surge 4, deploy 2 |
+| Generation time | 4.7 s (load average about 4) |
+
+Aggregation. Command: `/usr/bin/time -l uv run python -m lighthouse.aggregate --source sim`.
+
+| Item | Value |
+|---|---|
+| Output | 100,800 rows (5 endpoints x 20,160 minutes), 12 columns, see docs/schema.md |
+| Wall-clock | 14.5 s (including Drain3 over all 657k log lines) |
+| Peak RAM | 1.1 GB |
+| Machine load (`uptime`, 1 min) | 10.4 before, 11.4 after |
