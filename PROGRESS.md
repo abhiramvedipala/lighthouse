@@ -13,6 +13,7 @@ The GitHub repo does not exist yet, so features are merged locally with `git mer
 - [x] Phase 2, PR-8 `phase-2/baseline-detectors`: Static threshold and rolling z-score detectors
 - [x] Phase 2, PR-9 `phase-2/seasonal-baseline`: Seasonal baseline detector
 - [x] Phase 2, PR-10 `phase-2/lint-fix`: Fix lint error merged into main
+- [x] Phase 2, PR-11 `phase-2/isolation-forest`: Isolation Forest detector with ablations
 <!--done-->
 
 ## Needs me

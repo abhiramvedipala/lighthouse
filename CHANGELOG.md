@@ -15,3 +15,4 @@ One entry per merged PR.
 - PR-8 Static threshold and rolling z-score detectors: Detector interface, static threshold baseline, EWMA z-score, validation-only threshold selection, leakage tests
 - PR-9 Seasonal baseline detector: median/MAD per weekday-weekend 5-minute slot, one-sided robust z, per-series normaliser
 - PR-10 Fix lint error merged into main: wrap one long line that failed ruff on main
+- PR-11 Isolation Forest detector with ablations: per-service IF with residual/template/delta features, ablation switches, permutation importance
