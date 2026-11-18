@@ -53,3 +53,4 @@ build-backend = "setuptools.build_meta"
 "lighthouse/nab.py" = ["E501"]
 "lighthouse/services/*.py" = ["E501"]
 "tests/test_stream.py" = ["E501"]
+"lighthouse/stream.py" = ["E501"]

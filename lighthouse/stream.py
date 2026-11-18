@@ -7,6 +7,8 @@ lighthouse_anomaly_flag{...}; plus consumer lag and throughput.
 from __future__ import annotations
 
 import json
+import os
+import re
 import time
 from dataclasses import dataclass
 from pathlib import Path
@@ -20,6 +22,18 @@ from lighthouse.sim.config import load_slo
 
 SEASONAL_THRESHOLD = 2.2   # offline validation threshold (results/thresholds.json), same normalisation
 TOPICS = ("otlp_logs", "otlp_spans")
+SERVICE_RE = re.compile(r"^[A-Za-z0-9_.-]{1,64}$")
+MAX_SERVICES = 16
+MAX_SKEW_MS = 60_000
+
+
+def default_state_dir() -> str:
+    """Private per-user directory (0700); never a shared /tmp path."""
+    base = os.environ.get("XDG_STATE_HOME") or os.path.expanduser("~/.local/state")
+    path = os.path.join(base, "lighthouse")
+    os.makedirs(path, mode=0o700, exist_ok=True)
+    os.chmod(path, 0o700)
+    return path
 
 
 @dataclass
@@ -57,6 +71,7 @@ class StreamProcessor:
         self.metrics = metrics or Metrics()
         self.slo = {k: v["p95_ms"] for k, v in load_slo().items()}
         self.windower, self.tail = Windower(), Tail()
+        self.dropped = 0
         self.stores: dict[str, TemplateStore] = {}
         self.book = SignatureBook.load(self.state_dir / "signatures.json") if self.state_dir else SignatureBook()
         self.history: list[dict] = []
@@ -67,20 +82,33 @@ class StreamProcessor:
     # ---- ingest ----------------------------------------------------------------------------------
     def store(self, service: str) -> TemplateStore:
         if service not in self.stores:
+            if not SERVICE_RE.match(service) or len(self.stores) >= MAX_SERVICES:
+                raise ValueError(f"unacceptable service name {service!r}")
             path = self.state_dir / f"drain_{service}.state" if self.state_dir else None
             self.stores[service] = TemplateStore(path, sim_th=SIM_PIPELINE_SIM_TH)
         return self.stores[service]
 
     def on_message(self, topic: str, raw: bytes | str) -> None:
+        """Never raises: a malformed or hostile message is counted and dropped."""
+        try:
+            self._on_message(topic, raw)
+        except Exception:  # noqa: BLE001 - one bad record must not stop the consumer
+            self.dropped += 1
+
+    def _on_message(self, topic: str, raw: bytes | str) -> None:
         now = self.clock() * 1000
         self.n_messages += 1
         self.metrics.events.labels(topic).inc()
         if topic == "otlp_spans":
             for sp in decode_spans(raw):
+                if not self._plausible(sp.end_ms, sp.service, now):
+                    continue
                 self.metrics.lag.observe(max(now - sp.end_ms, 0) / 1000)
                 self.windower.add_span(sp)
         elif topic == "otlp_logs":
             for rec in decode_logs(raw):
+                if not self._plausible(rec.ts_ms, rec.service, now):
+                    continue
                 self.metrics.lag.observe(max(now - rec.ts_ms, 0) / 1000)
                 tid = self.store(rec.service).add(rec.body)
                 if rec.level == "ERROR":
@@ -88,6 +116,11 @@ class StreamProcessor:
                     self.windower.add_log(rec, sig.key(), new)
                 else:
                     self.windower.add_log(rec, None, False)
+
+    def _plausible(self, ts_ms: int, service: str, now_ms: float) -> bool:
+        ok = SERVICE_RE.match(service) is not None and abs(ts_ms - now_ms) <= MAX_SKEW_MS * 60 and len(self.windower.cells) < 20000
+        self.dropped += not ok
+        return ok
 
     # ---- scoring ---------------------------------------------------------------------------------
     def fit(self) -> None:
@@ -109,6 +142,9 @@ class StreamProcessor:
                     self.fit()
                 continue
             key = (row["service"], row["endpoint"])
+            if key not in self.slo or (key, "rate") not in self.seasonal.med or row["service"] not in self.forest.models:
+                self.dropped += 1  # unknown endpoint: nothing was fitted for it
+                continue
             hist = self.tail.add(row)
             scores = {
                 "static_threshold": (static_score(hist, self.slo[key]), 1.0),
@@ -134,12 +170,12 @@ class StreamProcessor:
             self.book.save(self.state_dir / "signatures.json")
 
 
-def run(bootstrap: str, group: str = "lighthouse", port: int = 9108, state_dir: str = "/tmp/lighthouse-state",
+def run(bootstrap: str, group: str = "lighthouse", port: int = 9108, state_dir: str | None = None,
         warmup_windows: int = 360, day_seconds: float = 1200, log=print) -> None:  # pragma: no cover - needs Kafka
     from confluent_kafka import Consumer
     from prometheus_client import start_http_server
 
-    proc = StreamProcessor(state_dir, warmup_windows, day_seconds)
+    proc = StreamProcessor(state_dir or default_state_dir(), warmup_windows, day_seconds)
     start_http_server(port, registry=proc.metrics.registry)
     c = Consumer({"bootstrap.servers": bootstrap, "group.id": group, "auto.offset.reset": "latest",
                   "enable.auto.commit": True})
@@ -169,7 +205,7 @@ def main() -> None:  # pragma: no cover
     ap = argparse.ArgumentParser()
     ap.add_argument("--bootstrap", default=os.environ.get("KAFKA_BOOTSTRAP", "localhost:9092"))
     ap.add_argument("--port", type=int, default=9108)
-    ap.add_argument("--state-dir", default=os.environ.get("STATE_DIR", "/tmp/lighthouse-state"))
+    ap.add_argument("--state-dir", default=os.environ.get("STATE_DIR"))
     ap.add_argument("--warmup-windows", type=int, default=360)
     a = ap.parse_args()
     run(a.bootstrap, port=a.port, state_dir=a.state_dir, warmup_windows=a.warmup_windows)

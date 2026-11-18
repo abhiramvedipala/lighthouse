@@ -127,3 +127,22 @@ def test_live_seasonal_scores_a_drop_in_rate():
     drop = normal.copy()
     drop["n"] = 2
     assert model.score(("s", "e"), drop) > 3 * max(model.score(("s", "e"), normal), 0.3)
+
+
+def test_hostile_input_is_dropped_not_fatal(tmp_path, monkeypatch):
+    from lighthouse.stream import default_state_dir
+
+    proc = StreamProcessor(warmup_windows=10**6, metrics=Metrics(), clock=lambda: 0)
+    proc.on_message("otlp_logs", b"not json")
+    proc.on_message("otlp_spans", span_msg("../../etc", "GET /x", 1000, 5))     # path-like service name
+    proc.on_message("otlp_spans", span_msg("gateway", "GET /x", 10**13, 5))     # absurd timestamp
+    assert proc.dropped == 3 and not proc.windower.cells
+    monkeypatch.setenv("XDG_STATE_HOME", str(tmp_path))
+    d = default_state_dir()
+    assert d.startswith(str(tmp_path)) and oct(__import__("os").stat(d).st_mode & 0o777) == "0o700"
+
+
+def test_unknown_endpoints_after_warmup_are_skipped():
+    proc, _ = run_scenario()
+    feed(proc, 90, 10, services=(("gateway", "GET /never-seen"),))
+    assert proc.tick(now_ms=93 * W) == [] or all(s.endpoint != "GET /never-seen" for s in proc.tick(now_ms=95 * W))
