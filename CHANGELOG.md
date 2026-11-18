@@ -12,3 +12,4 @@ One entry per merged PR.
 
 ## Phase 2
 - PR-7 Incident-level evaluation module: alarm merging, tolerance, precision/recall/F1, FA per day, delay, lead vs static, point-adjusted F1, benign alarms
+- PR-8 Static threshold and rolling z-score detectors: Detector interface, static threshold baseline, EWMA z-score, validation-only threshold selection, leakage tests
