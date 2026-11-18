@@ -14,7 +14,11 @@ from lighthouse.detectors.zscore import RollingZScore
 from lighthouse.evaluate import Incident
 from lighthouse.thresholds import select_threshold
 
-DETECTORS = {"static_threshold": StaticThreshold, "rolling_zscore": RollingZScore, "seasonal_baseline": SeasonalBaseline}
+DETECTORS = {
+    "static_threshold": StaticThreshold,
+    "rolling_zscore": RollingZScore,
+    "seasonal_baseline": SeasonalBaseline,
+}
 
 
 def register(name, factory):
