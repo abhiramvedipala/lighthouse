@@ -169,13 +169,15 @@ def charts(out: dict, ds: Dataset) -> None:
     colors = dict(zip(dets, ["black", "tab:blue", "tab:orange", "tab:green"], strict=True))
     fig, ax = plt.subplots(figsize=(9, 0.5 * len(inc) + 2))
     lo = ds.splits["test"][0]
+    seen = set()
     for i, row in enumerate(inc):
         real = next(x for x in ds.incidents if x.id == row["id"])
         ax.barh(i, real.end - real.start, left=real.start - lo, color="tab:red", alpha=0.25)
         for n in dets:
             r = next(p for p in out[n]["test"].per_incident if p["id"] == row["id"])
             if r["first_flag"] is not None:
-                ax.plot(r["first_flag"] - lo, i, "o", color=colors[n], ms=4, label=n if i == 0 else None)
+                ax.plot(r["first_flag"] - lo, i, "o", color=colors[n], ms=4, label=None if n in seen else n)
+                seen.add(n)
     ax.set_yticks(range(len(inc)))
     ax.set_yticklabels([r["id"] for r in inc], fontsize=7)
     ax.set_xlabel("minutes into the test window")
