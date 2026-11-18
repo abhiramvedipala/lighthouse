@@ -92,7 +92,14 @@ def regex_exact_parser(ini: Path | str | None = None):
     return parse
 
 
+# The Loghub default (0.4) stays in config/drain3.ini. The simulator's messages are short and
+# differ by one keyword, so the pipeline uses a stricter threshold chosen on simulator train-day
+# logs only (see DECISIONS.md D6 and scripts/tune_drain.py --sim).
+SIM_PIPELINE_SIM_TH = 0.9
+
 PARSERS = {"drain3": drain_parser(), "regex_exact": regex_exact_parser()}
+SIM_PARSERS = {"drain3": drain_parser(), f"drain3@{SIM_PIPELINE_SIM_TH}": drain_parser(SIM_PIPELINE_SIM_TH),
+               "regex_exact": regex_exact_parser()}
 
 
 @dataclass(frozen=True)
