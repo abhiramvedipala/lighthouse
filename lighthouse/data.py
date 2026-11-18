@@ -29,6 +29,7 @@ class Dataset:
     labels: dict
     slo: dict
     incidents: list[Incident] = field(default_factory=list)
+    fracs: tuple = (TRAIN_FRAC, VAL_FRAC)   # train and validation shares of the window
     _series: dict = field(default_factory=dict, repr=False)
 
     def __post_init__(self):
@@ -45,8 +46,8 @@ class Dataset:
 
     @property
     def splits(self) -> dict[str, tuple[int, int]]:
-        a = int(self.minutes * TRAIN_FRAC)
-        b = a + int(self.minutes * VAL_FRAC)
+        a = int(self.minutes * self.fracs[0])
+        b = a + int(self.minutes * self.fracs[1])
         return {"train": (0, a), "val": (a, b), "test": (b, self.minutes)}
 
     def series(self, key: tuple[str, str]) -> pd.DataFrame:

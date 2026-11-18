@@ -94,3 +94,22 @@ Isolation Forest ablations (thresholds on validation, scored on test):
 | residual-only features | 0.55 | 0.10 | 0.30 | 0.15 | 11.50 |
 | residual-only, per endpoint | 0.64 | 0.15 | 0.70 | 0.24 | 13.00 |
 
+
+## External sanity check: NAB (window level)
+
+Command: `uv run python -m lighthouse.nab` after `scripts/get_data.sh` (51 s, load average about 100). Same detectors and the same `evaluate.py`, but NAB's labeled windows as incidents, a 35/25/40 time split and an unlabeled threshold (99.9th percentile of the detector's validation scores), because there are too few windows for a labeled validation. Window-level precision and recall, not the official NAB score (that needs per-profile weights and a different window convention). Isolation Forest here uses residual-only features. A sample this small shows the detectors are not only tuned to the simulator; it does not rank them.
+
+| Series | Detector | Test windows | Detected | Alarm events | Precision | Recall |
+|---|---|---|---|---|---|---|
+| machine_temperature | seasonal_baseline | 2 | 2 | 7 | 0.43 | 1.0 |
+| machine_temperature | isolation_forest | 2 | 2 | 7 | 0.57 | 1.0 |
+| machine_temperature | prophet_residual | 2 | 0 | 0 | n/a | 0.0 |
+| ec2_cpu_utilization | all three | 0 | n/a | 0 | n/a | n/a (its only window falls in the train part) |
+| rds_cpu_utilization | seasonal_baseline | 2 | 2 | 11 | 0.27 | 1.0 |
+| rds_cpu_utilization | isolation_forest | 2 | 2 | 3 | 0.33 | 1.0 |
+| rds_cpu_utilization | prophet_residual | 2 | 2 | 1 | 1.00 | 1.0 |
+| elb_request_count | seasonal_baseline | 1 | 1 | 12 | 0.17 | 1.0 |
+| elb_request_count | isolation_forest | 1 | 1 | 13 | 0.23 | 1.0 |
+| elb_request_count | prophet_residual | 1 | 1 | 34 | 0.15 | 1.0 |
+
+Reading: windows are 17 to 48 hours wide, so recall is easy (every detector finds 5 of 5 windows on rds and elb) and precision is the discriminating number, which is low for all (0.15 to 0.57) except Prophet on rds (1 alarm, 1.0). Prophet missed both machine_temperature windows with no alarms at all. Nothing here contradicts the simulator ranking, and nothing confirms it: n is 5 windows.
