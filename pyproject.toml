@@ -1,0 +1,48 @@
+[project]
+name = "lighthouse"
+version = "0.1.0"
+description = "Log analytics and anomaly detection for microservices"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "numpy",
+    "pandas",
+    "pyarrow",
+    "duckdb",
+    "scikit-learn",
+    "prophet",
+    "drain3",
+    "matplotlib",
+    "pyyaml",
+]
+
+[project.optional-dependencies]
+live = [
+    "fastapi",
+    "uvicorn",
+    "httpx",
+    "prometheus-client",
+    "confluent-kafka",
+    "opentelemetry-sdk",
+    "opentelemetry-exporter-otlp",
+]
+
+[dependency-groups]
+dev = ["pytest", "ruff"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B"]
+
+[tool.setuptools.packages.find]
+include = ["lighthouse*"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
