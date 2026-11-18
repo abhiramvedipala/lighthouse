@@ -9,3 +9,6 @@ One entry per merged PR.
 - PR-4 Template extraction and error signatures: Drain3 with masking config, regex baseline, persisted state, error signatures, first parser table
 - PR-5 Aggregation into per-endpoint series: DuckDB per-endpoint per-minute table with signature features, schema doc, past-only leakage test
 - PR-6 Docs and tracking baseline: README with all sections, Mermaid architecture, study guide, Phase 1 interview notes
+
+## Phase 2
+- PR-7 Incident-level evaluation module: alarm merging, tolerance, precision/recall/F1, FA per day, delay, lead vs static, point-adjusted F1, benign alarms
