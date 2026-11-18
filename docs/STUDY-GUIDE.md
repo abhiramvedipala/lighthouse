@@ -13,7 +13,14 @@ Phase 1: simulator, parsing, aggregation
 5. PR-5 `phase-1/aggregation`: the per-endpoint per-minute table.
 6. PR-6 `phase-1/docs-baseline`: README skeleton, tracking files.
 
-(Phases 2 to 5 are added as they land.)
+Phase 2: detectors and evaluation
+7. PR-7 `phase-2/eval-metrics`: `lighthouse/evaluate.py` and its 26 hand-computed tests.
+8. PR-8 `phase-2/baseline-detectors`: detector interface, static threshold, z-score, threshold selection, leakage tests.
+9. PR-9 `phase-2/seasonal-baseline`, PR-11 `phase-2/isolation-forest`, PR-12 `phase-2/prophet-detector`: the three models.
+10. PR-10, PR-13: two small CI fixes (a lint line, Linux float digits).
+11. GH #2 `phase-2/eval-report`: the full run and results; GH #4 `phase-2/nab-check`.
+
+(Phases 3 to 5 are added as they land.)
 
 ## The commits that matter most (so far)
 
@@ -25,6 +32,8 @@ Phase 1: simulator, parsing, aggregation
 | `a07a6a5` | TemplateStore (persisted Drain state) and SignatureBook (first-seen, past-only) |
 | `78eddef` | Why pooled Drain scored 0.62 on simulator logs and what per-service parsing fixed |
 | `f6592f1` | DuckDB aggregation and the cumulative-sum new-signature feature |
+
+Phase 2 commits worth opening: the evaluator (`feat(evaluate)`), the poison leakage test (`test(leakage)`), the seasonal normaliser (`feat(detectors): add the seasonal baseline`), and `feat(report)`.
 
 ## Reading paths
 

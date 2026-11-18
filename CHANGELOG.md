@@ -11,6 +11,8 @@ One entry per merged PR.
 - PR-6 Docs and tracking baseline: README with all sections, Mermaid architecture, study guide, Phase 1 interview notes
 
 ## Phase 2
+- GH #2 Full evaluation and results table: all detectors end to end, tables, charts, thresholds.json, IF ablations; seasonal baseline wins (F1 0.79), IF 0.18, Prophet 0.14.
+- GH #4 External sanity check on NAB: window-level results on four series.
 - PR-7 Incident-level evaluation module: alarm merging, tolerance, precision/recall/F1, FA per day, delay, lead vs static, point-adjusted F1, benign alarms
 - PR-8 Static threshold and rolling z-score detectors: Detector interface, static threshold baseline, EWMA z-score, validation-only threshold selection, leakage tests
 - PR-9 Seasonal baseline detector: median/MAD per weekday-weekend 5-minute slot, one-sided robust z, per-series normaliser

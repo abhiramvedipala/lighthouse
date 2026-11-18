@@ -4,7 +4,7 @@
 
 Log analytics and anomaly detection for microservices: OpenTelemetry telemetry through Kafka into Loki, Prometheus and Tempo, a Drain3 template pipeline, and seasonal, Isolation Forest and Prophet detectors scored at the incident level against labeled faults and a plain static-threshold alert.
 
-> Status: Phase 1 of 5 done (simulator, parsing, aggregation). Detectors, the live stack and Kubernetes are described below as the plan and are marked as such until they land.
+> Status: Phases 1 and 2 of 5 done (simulator, parsing, aggregation, detectors, evaluation). The live stack and Kubernetes are described below as the plan until they land.
 
 ## Problem
 
@@ -68,19 +68,24 @@ uv run python -m lighthouse.aggregate --source sim   # the per-endpoint per-minu
 
 ## Results
 
-Phase 1 results so far; detector results arrive with Phase 2 and the headline paragraph (who beat whom) goes here first.
+**Who beat whom.** On the 4-day test window (10 injected incidents, 3 benign events) the seasonal baseline wins: precision 0.79, recall 0.80, F1 0.79, median lead 3.0 minutes over the static alert on the 5 incidents both catch, and 3 incidents only it catches. The plain static threshold scores F1 0.67 (it catches loud faults and misses drift, traffic drops and novel errors). Isolation Forest (F1 0.18) and Prophet (0.14) lose to both: on the test window they raise 14 and 7 false alarms a day, mostly on the weekend, because the training window has a single weekend. No detector catches the novel-error incidents (0/2). With 10 incidents, each one moves recall by 0.1.
 
-| Result | Value | Command |
+| Detector (test window) | Precision | Recall | F1 | False alarms/day | Median lead vs static (min) |
+|---|---|---|---|---|---|
+| static_threshold | 1.00 | 0.50 | 0.67 | 0.00 | reference |
+| rolling_zscore | 0.80 | 0.60 | 0.69 | 0.50 | 4.0 |
+| **seasonal_baseline** | 0.79 | 0.80 | 0.79 | 0.75 | 3.0 |
+| isolation_forest | 0.11 | 0.50 | 0.18 | 14.25 | 4.0 |
+| prophet_residual | 0.09 | 0.30 | 0.14 | 7.25 | -1.0 |
+
+Command: `uv run python -m lighthouse.evaluate --all` (44.5 s). Per fault type, ablations, point-adjusted F1 and the NAB check are in [RESULTS.md](RESULTS.md); charts are `docs/lead_time.png` and `docs/incident_timeline.png`.
+
+| Parser result | Value | Command |
 |---|---|---|
-| Drain3 grouping accuracy, HDFS | 0.9975 | `python -m lighthouse.parse.bench --all` |
-| Drain3, BGL | 0.8535 | same |
-| Drain3, OpenStack (not tuned) | 0.2985, below the regex baseline 0.4815 | same |
-| Drain3, Apache (not tuned) | 1.0000 | same |
-| Simulator logs, per service | 1.0000 (regex baseline also 1.0) | same, `--sim-dir data/sim` |
+| Drain3 grouping accuracy, HDFS / BGL | 0.9975 / 0.8535 | `python -m lighthouse.parse.bench --all` |
+| Drain3, OpenStack / Apache (not tuned) | 0.2985 (regex baseline 0.4815) / 1.0000 | same |
 | Simulated dataset | 5.29M requests, 657k log lines, 40 faults, 6 benign events | `python -m lighthouse.sim.run` |
-| Aggregation, 14 days | 100,800 rows in 14.5 s, 1.1 GB peak | `python -m lighthouse.aggregate --source sim` |
-
-Full tables with load averages: [RESULTS.md](RESULTS.md).
+| Aggregation, 14 days | 100,800 rows in 14.5 s | `python -m lighthouse.aggregate --source sim` |
 
 ## How it works
 
@@ -92,7 +97,7 @@ Full tables with load averages: [RESULTS.md](RESULTS.md).
 
 ## Testing
 
-`./scripts/check.sh` runs ruff, the pytest suite (offline, on the committed 2-day fixture) and, once Phase 2 lands, an evaluation smoke that must finish in under 2 minutes. Phase 1 has about 80 tests covering seasonality, determinism, each fault effect, parser metrics, restart-stable template ids and past-only features.
+`./scripts/check.sh` runs ruff, the pytest suite (offline, on the committed 2-day fixture, about 145 tests) and an evaluation smoke on the fixture (about 10 s, limit 2 minutes). Tests cover the simulator and each fault effect, parser metrics, restart-stable template ids, past-only features, 26 hand-computed evaluator cases, per-detector behaviour, and leakage (poisoning every row after a cut).
 
 ## Design decisions and trade-offs
 
@@ -113,7 +118,8 @@ Loghub data (https://github.com/logpai/loghub) is used for research benchmarking
 lighthouse/
   sim/        traffic, faults, templates, logs, plots, run
   parse/      Drain3 wrapper, signatures, benchmark
-  aggregate.py
+  aggregate.py, data.py, evaluate.py, report.py, nab.py, thresholds.py
+  detectors/  static, zscore, seasonal, iforest, prophet_residual
 config/       sim.yaml, slo.yaml, drain3.ini
 scripts/      check.sh, get_data.sh, make_fixture.py, tune_drain.py
 tests/        unit tests and the committed fixture
