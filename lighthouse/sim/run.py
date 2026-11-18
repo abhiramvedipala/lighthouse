@@ -27,7 +27,7 @@ def simulate(cfg, faults: bool = True):
     return params, req, logs, labels
 
 
-def write(out: Path, cfg, req, logs, labels) -> None:
+def write(out: Path, cfg, req, logs, labels, gzip_logs: bool = False) -> None:
     out.mkdir(parents=True, exist_ok=True)
     req = req.copy()
     req["service"] = [cfg.endpoints[i].service for i in req["ep"]]
@@ -35,7 +35,8 @@ def write(out: Path, cfg, req, logs, labels) -> None:
     req.drop(columns=["ep"]).to_parquet(out / "requests.parquet", index=False)
     logs = logs.copy()
     logs["timestamp"] = pd.to_datetime(logs["ts"], unit="ms").dt.strftime("%Y-%m-%dT%H:%M:%S.%f").str[:-3] + "Z"
-    logs.drop(columns=["ts"]).to_json(out / "logs.jsonl", orient="records", lines=True)
+    name = "logs.jsonl.gz" if gzip_logs else "logs.jsonl"
+    logs.drop(columns=["ts"]).to_json(out / name, orient="records", lines=True)
     (out / "labels.json").write_text(json.dumps(labels, indent=1))
 
 
