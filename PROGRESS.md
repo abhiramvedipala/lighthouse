@@ -8,6 +8,7 @@ The GitHub repo does not exist yet, so features are merged locally with `git mer
 - [x] Phase 1, PR-3 `phase-1/loghub-benchmark`: Loghub download and parser benchmark harness
 - [x] Phase 1, PR-4 `phase-1/drain-templates`: Template extraction and error signatures
 - [x] Phase 1, PR-5 `phase-1/aggregation`: Aggregation into per-endpoint series
+- [x] Phase 1, PR-6 `phase-1/docs-baseline`: Docs and tracking baseline
 <!--done-->
 
 ## Needs me
