@@ -7,3 +7,4 @@ Local mirror of the GitHub issues (the repo did not exist when this was built, s
 - #3 [feature] Phase 1: Loghub download and parser benchmark harness (branch `phase-1/loghub-benchmark`), status: fixed in PR-3
 - #4 [feature] Phase 1: Template extraction and error signatures (branch `phase-1/drain-templates`), status: fixed in PR-4
 - #5 [feature] Phase 1: Aggregation into per-endpoint series (branch `phase-1/aggregation`), status: fixed in PR-5
+- #6 [docs] Phase 1: Docs and tracking baseline (branch `phase-1/docs-baseline`), status: open
