@@ -6,6 +6,7 @@ same message shapes. POST /admin/fault (header X-Admin-Token) turns a fault on f
 """
 from __future__ import annotations
 
+import hmac
 import logging
 import math
 import os
@@ -157,7 +158,7 @@ def create_app(service: str, telemetry: Telemetry | None = None, downstream: dic
     @app.post("/admin/fault")
     def admin_fault(body: dict, request: Request):
         sent = request.headers.get("x-admin-token")
-        if not token or sent != token:
+        if not token or not hmac.compare_digest((sent or "").encode(), token.encode()):
             raise HTTPException(status_code=401, detail="admin token required")
         ftype = body.get("type")
         if ftype not in FAULTS:
