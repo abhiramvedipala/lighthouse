@@ -43,3 +43,9 @@ Numbered, in the order they were made. Format: context, options, choice, why.
 - Context: detectors score endpoints, IF scores services, and the brief speaks of false alarms per day per service.
 - Choice: a service is flagged in a minute when its score exceeds the detector's threshold (service score = max over its endpoints). One threshold per detector, not per service, chosen on validation to maximise incident-level F1 subject to an average of at most 1 false alarm per service per day.
 - Why: per-service thresholds would be fitted on only 3 to 4 validation incidents each. The cost: a noisy service can exceed 1 false alarm a day on average-feasible thresholds; the per-service numbers are in RESULTS.md.
+
+## D9. Seasonal baseline design choices, and how they were made
+- One-sided scores: a rate drop, an error rise and a latency rise are harmful; a traffic surge is not an alarm by itself. The benign surge events exist to test exactly this. The rolling z-score stays two-sided as specified, so it can false-alarm on surges.
+- Slots pool their two neighbours (about 30 samples per weekend slot instead of 10).
+- Each series' z is divided by its train 99.9th percentile before the max over signals. Without it the heavy-tailed error-rate z set the validation threshold at 18 and traffic drops (a rate-only signal at z about 8) were never caught on validation (recall 0 on that type).
+- Process note: while developing this detector I printed test-window numbers once next to validation. The normaliser change was motivated by the validation failure on traffic drops, not by the test numbers, but the habit is wrong. From here on development output shows validation only; the test window is scored once, by `python -m lighthouse.evaluate --all`.
