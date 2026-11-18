@@ -1,0 +1,549 @@
+{
+ "static_threshold": {
+  "test": {
+   "n_incidents": 10,
+   "n_alarm_events": 7,
+   "precision": 1.0,
+   "recall": 0.5,
+   "f1": 0.6666666666666666,
+   "false_alarms": 0,
+   "false_alarms_per_day": 0.0,
+   "false_alarms_per_service_day": 0.0,
+   "median_delay": 4.0,
+   "median_lead": 0.0,
+   "n_both": 5,
+   "n_detector_only": 0,
+   "n_static_only": 0,
+   "benign_false_alarms": 0,
+   "benign_events_alarmed": 0,
+   "n_benign": 3,
+   "point_adjusted_f1": 0.36140350877192984
+  },
+  "val": {
+   "n_incidents": 10,
+   "n_alarm_events": 7,
+   "precision": 1.0,
+   "recall": 0.5,
+   "f1": 0.6666666666666666,
+   "false_alarms": 0,
+   "false_alarms_per_day": 0.0,
+   "false_alarms_per_service_day": 0.0,
+   "median_delay": 4.0,
+   "median_lead": 0.0,
+   "n_both": 5,
+   "n_detector_only": 0,
+   "n_static_only": 0,
+   "benign_false_alarms": 0,
+   "benign_events_alarmed": 0,
+   "n_benign": 0,
+   "point_adjusted_f1": 0.3636363636363636
+  },
+  "per_type": {
+   "traffic_drop": {
+    "n": 2,
+    "detected": 0,
+    "recall": 0.0,
+    "median_delay": NaN,
+    "median_lead": NaN,
+    "detector_only": 0
+   },
+   "dependency_outage": {
+    "n": 1,
+    "detected": 1,
+    "recall": 1.0,
+    "median_delay": 4.0,
+    "median_lead": 0.0,
+    "detector_only": 0
+   },
+   "latency_spike": {
+    "n": 2,
+    "detected": 2,
+    "recall": 1.0,
+    "median_delay": 4.0,
+    "median_lead": 0.0,
+    "detector_only": 0
+   },
+   "novel_error": {
+    "n": 2,
+    "detected": 0,
+    "recall": 0.0,
+    "median_delay": NaN,
+    "median_lead": NaN,
+    "detector_only": 0
+   },
+   "error_burst": {
+    "n": 2,
+    "detected": 2,
+    "recall": 1.0,
+    "median_delay": 6.0,
+    "median_lead": 0.0,
+    "detector_only": 0
+   },
+   "latency_drift": {
+    "n": 1,
+    "detected": 0,
+    "recall": 0.0,
+    "median_delay": NaN,
+    "median_lead": NaN,
+    "detector_only": 0
+   }
+  },
+  "seconds": 0.2
+ },
+ "rolling_zscore": {
+  "test": {
+   "n_incidents": 10,
+   "n_alarm_events": 10,
+   "precision": 0.8,
+   "recall": 0.6,
+   "f1": 0.6857142857142857,
+   "false_alarms": 2,
+   "false_alarms_per_day": 0.5,
+   "false_alarms_per_service_day": 0.16666666666666666,
+   "median_delay": 1.0,
+   "median_lead": 4.0,
+   "n_both": 5,
+   "n_detector_only": 1,
+   "n_static_only": 0,
+   "benign_false_alarms": 0,
+   "benign_events_alarmed": 0,
+   "n_benign": 3,
+   "point_adjusted_f1": 0.41216216216216217
+  },
+  "val": {
+   "n_incidents": 10,
+   "n_alarm_events": 7,
+   "precision": 1.0,
+   "recall": 0.5,
+   "f1": 0.6666666666666666,
+   "false_alarms": 0,
+   "false_alarms_per_day": 0.0,
+   "false_alarms_per_service_day": 0.0,
+   "median_delay": 1.0,
+   "median_lead": 2.0,
+   "n_both": 5,
+   "n_detector_only": 0,
+   "n_static_only": 0,
+   "benign_false_alarms": 0,
+   "benign_events_alarmed": 0,
+   "n_benign": 0,
+   "point_adjusted_f1": 0.3636363636363636
+  },
+  "per_type": {
+   "traffic_drop": {
+    "n": 2,
+    "detected": 1,
+    "recall": 0.5,
+    "median_delay": 3.0,
+    "median_lead": NaN,
+    "detector_only": 1
+   },
+   "dependency_outage": {
+    "n": 1,
+    "detected": 1,
+    "recall": 1.0,
+    "median_delay": 0.0,
+    "median_lead": 4.0,
+    "detector_only": 0
+   },
+   "latency_spike": {
+    "n": 2,
+    "detected": 2,
+    "recall": 1.0,
+    "median_delay": 2.0,
+    "median_lead": 2.0,
+    "detector_only": 0
+   },
+   "novel_error": {
+    "n": 2,
+    "detected": 0,
+    "recall": 0.0,
+    "median_delay": NaN,
+    "median_lead": NaN,
+    "detector_only": 0
+   },
+   "error_burst": {
+    "n": 2,
+    "detected": 2,
+    "recall": 1.0,
+    "median_delay": 0.0,
+    "median_lead": 6.0,
+    "detector_only": 0
+   },
+   "latency_drift": {
+    "n": 1,
+    "detected": 0,
+    "recall": 0.0,
+    "median_delay": NaN,
+    "median_lead": NaN,
+    "detector_only": 0
+   }
+  },
+  "seconds": 0.7
+ },
+ "seasonal_baseline": {
+  "test": {
+   "n_incidents": 10,
+   "n_alarm_events": 14,
+   "precision": 0.7857142857142857,
+   "recall": 0.8,
+   "f1": 0.7927927927927927,
+   "false_alarms": 3,
+   "false_alarms_per_day": 0.75,
+   "false_alarms_per_service_day": 0.25,
+   "median_delay": 2.0,
+   "median_lead": 3.0,
+   "n_both": 5,
+   "n_detector_only": 3,
+   "n_static_only": 0,
+   "benign_false_alarms": 0,
+   "benign_events_alarmed": 0,
+   "n_benign": 3,
+   "point_adjusted_f1": 0.7069154774972558
+  },
+  "val": {
+   "n_incidents": 10,
+   "n_alarm_events": 14,
+   "precision": 0.9285714285714286,
+   "recall": 0.8,
+   "f1": 0.859504132231405,
+   "false_alarms": 1,
+   "false_alarms_per_day": 0.3333333333333333,
+   "false_alarms_per_service_day": 0.1111111111111111,
+   "median_delay": 2.0,
+   "median_lead": 2.0,
+   "n_both": 5,
+   "n_detector_only": 3,
+   "n_static_only": 0,
+   "benign_false_alarms": 0,
+   "benign_events_alarmed": 0,
+   "n_benign": 0,
+   "point_adjusted_f1": 0.9067641681901281
+  },
+  "per_type": {
+   "traffic_drop": {
+    "n": 2,
+    "detected": 2,
+    "recall": 1.0,
+    "median_delay": 3.0,
+    "median_lead": NaN,
+    "detector_only": 2
+   },
+   "dependency_outage": {
+    "n": 1,
+    "detected": 1,
+    "recall": 1.0,
+    "median_delay": 0.0,
+    "median_lead": 4.0,
+    "detector_only": 0
+   },
+   "latency_spike": {
+    "n": 2,
+    "detected": 2,
+    "recall": 1.0,
+    "median_delay": 2.0,
+    "median_lead": 2.0,
+    "detector_only": 0
+   },
+   "novel_error": {
+    "n": 2,
+    "detected": 0,
+    "recall": 0.0,
+    "median_delay": NaN,
+    "median_lead": NaN,
+    "detector_only": 0
+   },
+   "error_burst": {
+    "n": 2,
+    "detected": 2,
+    "recall": 1.0,
+    "median_delay": 0.5,
+    "median_lead": 5.5,
+    "detector_only": 0
+   },
+   "latency_drift": {
+    "n": 1,
+    "detected": 1,
+    "recall": 1.0,
+    "median_delay": 106.0,
+    "median_lead": NaN,
+    "detector_only": 1
+   }
+  },
+  "seconds": 0.9
+ },
+ "isolation_forest": {
+  "test": {
+   "n_incidents": 10,
+   "n_alarm_events": 64,
+   "precision": 0.109375,
+   "recall": 0.5,
+   "f1": 0.1794871794871795,
+   "false_alarms": 57,
+   "false_alarms_per_day": 14.25,
+   "false_alarms_per_service_day": 4.75,
+   "median_delay": 2.0,
+   "median_lead": 4.0,
+   "n_both": 3,
+   "n_detector_only": 2,
+   "n_static_only": 2,
+   "benign_false_alarms": 0,
+   "benign_events_alarmed": 0,
+   "n_benign": 3,
+   "point_adjusted_f1": 0.5794594594594594
+  },
+  "val": {
+   "n_incidents": 10,
+   "n_alarm_events": 17,
+   "precision": 0.47058823529411764,
+   "recall": 0.4,
+   "f1": 0.4324324324324324,
+   "false_alarms": 9,
+   "false_alarms_per_day": 3.0,
+   "false_alarms_per_service_day": 1.0,
+   "median_delay": 7.5,
+   "median_lead": -9.5,
+   "n_both": 2,
+   "n_detector_only": 2,
+   "n_static_only": 3,
+   "benign_false_alarms": 0,
+   "benign_events_alarmed": 0,
+   "n_benign": 0,
+   "point_adjusted_f1": 0.40583554376657827
+  },
+  "per_type": {
+   "traffic_drop": {
+    "n": 2,
+    "detected": 1,
+    "recall": 0.5,
+    "median_delay": 2.0,
+    "median_lead": NaN,
+    "detector_only": 1
+   },
+   "dependency_outage": {
+    "n": 1,
+    "detected": 1,
+    "recall": 1.0,
+    "median_delay": 0.0,
+    "median_lead": 4.0,
+    "detector_only": 0
+   },
+   "latency_spike": {
+    "n": 2,
+    "detected": 1,
+    "recall": 0.5,
+    "median_delay": 3.0,
+    "median_lead": 1.0,
+    "detector_only": 0
+   },
+   "novel_error": {
+    "n": 2,
+    "detected": 0,
+    "recall": 0.0,
+    "median_delay": NaN,
+    "median_lead": NaN,
+    "detector_only": 0
+   },
+   "error_burst": {
+    "n": 2,
+    "detected": 1,
+    "recall": 0.5,
+    "median_delay": 0.0,
+    "median_lead": 8.0,
+    "detector_only": 0
+   },
+   "latency_drift": {
+    "n": 1,
+    "detected": 1,
+    "recall": 1.0,
+    "median_delay": 144.0,
+    "median_lead": NaN,
+    "detector_only": 1
+   }
+  },
+  "seconds": 4.3
+ },
+ "prophet_residual": {
+  "test": {
+   "n_incidents": 10,
+   "n_alarm_events": 32,
+   "precision": 0.09375,
+   "recall": 0.3,
+   "f1": 0.14285714285714285,
+   "false_alarms": 29,
+   "false_alarms_per_day": 7.25,
+   "false_alarms_per_service_day": 2.4166666666666665,
+   "median_delay": 5.0,
+   "median_lead": -1.0,
+   "n_both": 3,
+   "n_detector_only": 0,
+   "n_static_only": 2,
+   "benign_false_alarms": 0,
+   "benign_events_alarmed": 0,
+   "n_benign": 3,
+   "point_adjusted_f1": 0.12420785804816223
+  },
+  "val": {
+   "n_incidents": 10,
+   "n_alarm_events": 15,
+   "precision": 0.4,
+   "recall": 0.5,
+   "f1": 0.4444444444444445,
+   "false_alarms": 9,
+   "false_alarms_per_day": 3.0,
+   "false_alarms_per_service_day": 1.0,
+   "median_delay": 16.0,
+   "median_lead": -12.0,
+   "n_both": 3,
+   "n_detector_only": 2,
+   "n_static_only": 2,
+   "benign_false_alarms": 0,
+   "benign_events_alarmed": 0,
+   "n_benign": 0,
+   "point_adjusted_f1": 0.40547263681592044
+  },
+  "per_type": {
+   "traffic_drop": {
+    "n": 2,
+    "detected": 0,
+    "recall": 0.0,
+    "median_delay": NaN,
+    "median_lead": NaN,
+    "detector_only": 0
+   },
+   "dependency_outage": {
+    "n": 1,
+    "detected": 1,
+    "recall": 1.0,
+    "median_delay": 5.0,
+    "median_lead": -1.0,
+    "detector_only": 0
+   },
+   "latency_spike": {
+    "n": 2,
+    "detected": 2,
+    "recall": 1.0,
+    "median_delay": 4.0,
+    "median_lead": 0.0,
+    "detector_only": 0
+   },
+   "novel_error": {
+    "n": 2,
+    "detected": 0,
+    "recall": 0.0,
+    "median_delay": NaN,
+    "median_lead": NaN,
+    "detector_only": 0
+   },
+   "error_burst": {
+    "n": 2,
+    "detected": 0,
+    "recall": 0.0,
+    "median_delay": NaN,
+    "median_lead": NaN,
+    "detector_only": 0
+   },
+   "latency_drift": {
+    "n": 1,
+    "detected": 0,
+    "recall": 0.0,
+    "median_delay": NaN,
+    "median_lead": NaN,
+    "detector_only": 0
+   }
+  },
+  "seconds": 12.5
+ },
+ "ensemble": {
+  "test": {
+   "n_incidents": 10,
+   "n_alarm_events": 59,
+   "precision": 0.13559322033898305,
+   "recall": 0.6,
+   "f1": 0.22119815668202764,
+   "false_alarms": 51,
+   "false_alarms_per_day": 12.75,
+   "false_alarms_per_service_day": 4.25,
+   "median_delay": 2.5,
+   "median_lead": 2.5,
+   "n_both": 4,
+   "n_detector_only": 2,
+   "n_static_only": 1,
+   "benign_false_alarms": 0,
+   "benign_events_alarmed": 0,
+   "n_benign": 3,
+   "point_adjusted_f1": 0.5433746425166827
+  },
+  "val": {
+   "n_incidents": 10,
+   "n_alarm_events": 17,
+   "precision": 0.47058823529411764,
+   "recall": 0.4,
+   "f1": 0.4324324324324324,
+   "false_alarms": 9,
+   "false_alarms_per_day": 3.0,
+   "false_alarms_per_service_day": 1.0,
+   "median_delay": 7.5,
+   "median_lead": -9.5,
+   "n_both": 2,
+   "n_detector_only": 2,
+   "n_static_only": 3,
+   "benign_false_alarms": 0,
+   "benign_events_alarmed": 0,
+   "n_benign": 0,
+   "point_adjusted_f1": 0.40583554376657827
+  },
+  "per_type": {
+   "traffic_drop": {
+    "n": 2,
+    "detected": 1,
+    "recall": 0.5,
+    "median_delay": 2.0,
+    "median_lead": NaN,
+    "detector_only": 1
+   },
+   "dependency_outage": {
+    "n": 1,
+    "detected": 1,
+    "recall": 1.0,
+    "median_delay": 0.0,
+    "median_lead": 4.0,
+    "detector_only": 0
+   },
+   "latency_spike": {
+    "n": 2,
+    "detected": 2,
+    "recall": 1.0,
+    "median_delay": 4.0,
+    "median_lead": 0.0,
+    "detector_only": 0
+   },
+   "novel_error": {
+    "n": 2,
+    "detected": 0,
+    "recall": 0.0,
+    "median_delay": NaN,
+    "median_lead": NaN,
+    "detector_only": 0
+   },
+   "error_burst": {
+    "n": 2,
+    "detected": 1,
+    "recall": 0.5,
+    "median_delay": 0.0,
+    "median_lead": 8.0,
+    "detector_only": 0
+   },
+   "latency_drift": {
+    "n": 1,
+    "detected": 1,
+    "recall": 1.0,
+    "median_delay": 144.0,
+    "median_lead": NaN,
+    "detector_only": 1
+   }
+  },
+  "seconds": 0.0
+ },
+ "_wall_seconds": 44.5
+}
