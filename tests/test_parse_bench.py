@@ -47,3 +47,14 @@ def test_evaluate_parser_reports_all_fields():
     assert r["grouping_accuracy"] == 1.0
     assert (r["templates_found"], r["templates_true"]) == (2, 2)
     assert r["seconds"] >= 0
+
+
+def test_grouped_parsing_keeps_services_apart():
+    from lighthouse.parse.bench import parse_grouped
+
+    contents = ["config reloaded", "config reloaded", "config reloaded"]
+    pred = parse_grouped(lambda lines: [0] * len(lines), contents, ["a", "b", "a"])
+    assert pred == [("a", 0), ("b", 0), ("a", 0)]
+    # identical text in two services is two true templates, and grouped parsing scores it correctly
+    assert grouping_accuracy(["a.t", "b.t", "a.t"], pred) == 1.0
+    assert grouping_accuracy(["a.t", "b.t", "a.t"], [0, 0, 0]) == 0.0

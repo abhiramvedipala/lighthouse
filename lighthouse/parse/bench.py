@@ -47,9 +47,31 @@ def load_loghub(name: str, data_dir: Path | None = None) -> pd.DataFrame:
     return pd.read_csv(path, dtype=str, keep_default_na=False)
 
 
-def evaluate_parser(parser: Parser, contents: Sequence[str], truth: Sequence) -> dict:
+def load_sim_logs(sim_dir: Path | None = None) -> pd.DataFrame:
+    """Simulator logs as (Content, EventId): the simulator knows each line's true template id."""
+    d = sim_dir or ROOT / "data" / "sim"
+    path = next((d / n for n in ("logs.jsonl", "logs.jsonl.gz") if (d / n).exists()), None)
+    if path is None:
+        raise FileNotFoundError(f"no logs in {d}: run python -m lighthouse.sim.run")
+    df = pd.read_json(path, lines=True)
+    return pd.DataFrame({"Content": df["message"].astype(str), "EventId": df["tid"], "Group": df["service"]})
+
+
+def parse_grouped(parser: Parser, contents: Sequence[str], groups: Sequence) -> list:
+    """Parse each group (here: each service) with its own parser state; ids are (group, id)."""
+    pred: list = [None] * len(contents)
+    by: dict = {}
+    for i, g in enumerate(groups):
+        by.setdefault(g, []).append(i)
+    for g, idx in by.items():
+        for i, cid in zip(idx, parser([contents[i] for i in idx]), strict=True):
+            pred[i] = (g, cid)
+    return pred
+
+
+def evaluate_parser(parser: Parser, contents: Sequence[str], truth: Sequence, groups: Sequence | None = None) -> dict:
     t0 = time.perf_counter()
-    pred = parser(contents)
+    pred = parser(contents) if groups is None else parse_grouped(parser, contents, groups)
     secs = time.perf_counter() - t0
     found, true_n = template_counts(truth, pred)
     return {
@@ -60,24 +82,26 @@ def evaluate_parser(parser: Parser, contents: Sequence[str], truth: Sequence) ->
     }
 
 
-def registry() -> dict[str, Parser]:
+def registry(simulator: bool = False) -> dict[str, Parser]:
     """Name -> parser. Parsers register themselves in lighthouse.parse.templates."""
     reg: dict[str, Parser] = {"exact": lambda lines: list(lines)}  # every distinct line its own group
     try:
         from lighthouse.parse import templates
 
-        reg.update(templates.PARSERS)
+        reg.update(templates.SIM_PARSERS if simulator else templates.PARSERS)
     except ImportError:
         pass
     return reg
 
 
-def run_all(names: Sequence[str] = LOGHUB_SETS) -> pd.DataFrame:
+def run_all(names: Sequence[str] = LOGHUB_SETS, sim_dir: Path | None = None) -> pd.DataFrame:
     rows = []
     for ds in names:
-        df = load_loghub(ds)
-        for pname, fn in registry().items():
-            r = evaluate_parser(fn, df["Content"].tolist(), df["EventId"].tolist())
+        sim = ds == "simulator"
+        df = load_sim_logs(sim_dir) if sim else load_loghub(ds)
+        for pname, fn in registry(sim).items():
+            groups = df["Group"].tolist() if sim else None
+            r = evaluate_parser(fn, df["Content"].tolist(), df["EventId"].tolist(), groups)
             rows.append({"dataset": ds, "parser": pname, **r})
     return pd.DataFrame(rows)
 
@@ -85,10 +109,11 @@ def run_all(names: Sequence[str] = LOGHUB_SETS) -> pd.DataFrame:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--all", action="store_true", help="all four Loghub samples")
-    ap.add_argument("--dataset", choices=LOGHUB_SETS)
+    ap.add_argument("--dataset", choices=(*LOGHUB_SETS, "simulator"))
+    ap.add_argument("--sim-dir", type=Path, default=None)
     a = ap.parse_args()
-    names = LOGHUB_SETS if a.all or not a.dataset else (a.dataset,)
-    print(run_all(names).to_string(index=False))
+    names = (*LOGHUB_SETS, "simulator") if a.all or not a.dataset else (a.dataset,)
+    print(run_all(names, a.sim_dir).to_string(index=False))
 
 
 if __name__ == "__main__":
