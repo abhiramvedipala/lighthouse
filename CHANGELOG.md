@@ -14,3 +14,4 @@ One entry per merged PR.
 - PR-7 Incident-level evaluation module: alarm merging, tolerance, precision/recall/F1, FA per day, delay, lead vs static, point-adjusted F1, benign alarms
 - PR-8 Static threshold and rolling z-score detectors: Detector interface, static threshold baseline, EWMA z-score, validation-only threshold selection, leakage tests
 - PR-9 Seasonal baseline detector: median/MAD per weekday-weekend 5-minute slot, one-sided robust z, per-series normaliser
+- PR-10 Fix lint error merged into main: wrap one long line that failed ruff on main
