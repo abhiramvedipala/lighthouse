@@ -61,7 +61,7 @@ GATEWAY = (
         "slow tls handshake client={ip} took {ms}ms",
     ])
     + _mk("gateway", "ERROR", "err_base", [
-        ("upstream orders returned 500 for cart={id}", "", "orders call failed with status 500 cart={id} (will not retry)"),
+        ("upstream orders returned 500 for cart={id} HTTPStatusError", "HTTPStatusError", "orders call failed with status 500 cart={id} HTTPStatusError"),
         ("failed to serialize response for key products:{id} ValueError", "ValueError", "response serialization failed key=products:{id} ValueError"),
         ("client disconnected before response ip={ip} ConnectionResetError", "ConnectionResetError", "client connection reset ip={ip} ConnectionResetError"),
         ("request timed out after {ms}ms cart={id} TimeoutError", "TimeoutError", "deadline exceeded after {ms}ms cart={id} TimeoutError"),

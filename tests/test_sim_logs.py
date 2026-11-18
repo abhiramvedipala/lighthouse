@@ -33,8 +33,8 @@ def test_log_volume_is_a_small_fraction_of_requests(sim):
 
 def test_each_service_has_about_forty_templates():
     for svc in TEMPLATES:
-        n = len(TEMPLATES[svc]) + 1  # plus the request-line template(s) counted below
-        assert 30 <= n + 2 <= 45
+        n = len(TEMPLATES[svc]) + sum(1 for t in ground_truth() if t.startswith(f"{svc}.req."))
+        assert 30 <= n <= 45
 
 
 def test_ground_truth_covers_every_emitted_template(sim):
@@ -64,5 +64,5 @@ def test_same_seed_identical_logs():
 def test_error_lines_mention_exception_class_when_template_has_one(sim):
     _, _, logs = sim
     errs = logs[(logs["level"] == "ERROR") & logs["tid"].str.contains("err_base")]
-    assert errs["message"].str.contains("Error").mean() > 0.8
+    assert errs["message"].str.contains("Error").mean() == 1.0
     assert np.isfinite(errs["latency_ms"]).all()
