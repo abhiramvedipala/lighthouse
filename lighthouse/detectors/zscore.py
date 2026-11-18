@@ -13,6 +13,7 @@ from lighthouse.detectors.base import Detector, service_max, smooth_features
 
 SPAN = 180  # minutes; alpha = 2 / (span + 1)
 SIGNALS = ("rate", "err", "lat")
+MIN_STD = 1e-3  # absolute floor so a perfectly constant series cannot divide by zero
 
 
 class RollingZScore(Detector):
@@ -48,7 +49,7 @@ class RollingZScore(Detector):
                 x = f[sig]
                 mean = x.ewm(alpha=alpha, adjust=False).mean().shift(1)  # past only
                 var = ((x - mean) ** 2).ewm(alpha=alpha, adjust=False).mean().shift(1)
-                std = np.sqrt(var).clip(lower=self.std_floor.get((key, sig), 1e-6))
+                std = np.sqrt(var).clip(lower=max(self.std_floor.get((key, sig), 0.0), MIN_STD))
                 zs.append(((x - mean).abs() / std).fillna(0.0).to_numpy())
             per_key[key] = np.max(zs, axis=0)
         return service_max(per_key, ds)
