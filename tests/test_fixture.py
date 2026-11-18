@@ -25,7 +25,10 @@ def test_fixture_has_every_fault_type_twice():
 def test_fixture_regenerates_identically():
     cfg = load_sim_config(days=2, rate_scale=0.25, seed=7)
     _, req, _, labels = simulate(cfg)
-    assert labels == json.loads((FIX / "labels.json").read_text())
+    def norm(x):  # libm differences between macOS and Linux move floats in the last digits
+        return json.loads(json.dumps(x), parse_float=lambda f: round(float(f), 6))
+
+    assert norm(labels) == norm(json.loads((FIX / "labels.json").read_text()))
     stored = pd.read_parquet(FIX / "requests.parquet")
     assert len(stored) == len(req)
     assert stored["ts"].iloc[0] == req["ts"].iloc[0]

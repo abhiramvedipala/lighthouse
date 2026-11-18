@@ -14,3 +14,4 @@ Local mirror of the GitHub issues (the repo did not exist when this was built, s
 - #10 [bug] Phase 2: Fix lint error merged into main (branch `phase-2/lint-fix`), status: fixed in PR-10
 - #11 [feature] Phase 2: Isolation Forest detector with ablations (branch `phase-2/isolation-forest`), status: fixed in PR-11
 - #12 [feature] Phase 2: Prophet residual detector (branch `phase-2/prophet-detector`), status: fixed in PR-12
+- #13 [bug] Phase 2: CI fails: fixture labels differ in float last digits on Linux (branch `phase-2/fixture-float-fix`), status: fixed in PR-13
