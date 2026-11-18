@@ -62,7 +62,8 @@ def test_no_overlap_on_same_service(sim):
                 continue
             same = {x["service"] for x in a["affected"]} & {x["service"] for x in b["affected"]}
             if same:
-                assert pd.Timestamp(a["end"]) <= pd.Timestamp(b["start"]) or pd.Timestamp(b["end"]) <= pd.Timestamp(a["start"])
+                a0, a1, b0, b1 = (pd.Timestamp(x) for x in (a["start"], a["end"], b["start"], b["end"]))
+                assert a1 <= b0 or b1 <= a0
 
 
 def test_labels_deterministic():
