@@ -1,0 +1,334 @@
+{
+ "faults": [
+  {
+   "id": "f00-latency_drift",
+   "type": "latency_drift",
+   "service": "gateway",
+   "endpoint": "GET /products",
+   "start_min": 236,
+   "end_min": 408,
+   "severity": 3.2271166110556466,
+   "benign": false,
+   "affected": [
+    {
+     "service": "gateway",
+     "endpoint": "GET /products",
+     "start_min": 236,
+     "start": "2026-10-05 03:56:00"
+    }
+   ],
+   "start": "2026-10-05 03:56:00",
+   "end": "2026-10-05 06:48:00"
+  },
+  {
+   "id": "f01-error_burst",
+   "type": "error_burst",
+   "service": "orders",
+   "endpoint": "POST /orders",
+   "start_min": 294,
+   "end_min": 309,
+   "severity": 0.3797124607536749,
+   "benign": false,
+   "affected": [
+    {
+     "service": "orders",
+     "endpoint": "POST /orders",
+     "start_min": 294,
+     "start": "2026-10-05 04:54:00"
+    }
+   ],
+   "start": "2026-10-05 04:54:00",
+   "end": "2026-10-05 05:09:00"
+  },
+  {
+   "id": "f02-novel_error",
+   "type": "novel_error",
+   "service": "inventory",
+   "endpoint": "GET /stock/{sku}",
+   "start_min": 419,
+   "end_min": 493,
+   "severity": 0.0028682773074574434,
+   "benign": false,
+   "affected": [
+    {
+     "service": "inventory",
+     "endpoint": "GET /stock/{sku}",
+     "start_min": 419,
+     "start": "2026-10-05 06:59:00"
+    }
+   ],
+   "start": "2026-10-05 06:59:00",
+   "end": "2026-10-05 08:13:00"
+  },
+  {
+   "id": "f03-dependency_outage",
+   "type": "dependency_outage",
+   "service": "inventory",
+   "endpoint": "GET /stock/{sku}",
+   "start_min": 583,
+   "end_min": 592,
+   "severity": 0.95,
+   "benign": false,
+   "affected": [
+    {
+     "service": "inventory",
+     "endpoint": "GET /stock/{sku}",
+     "start_min": 583,
+     "start": "2026-10-05 09:43:00"
+    },
+    {
+     "service": "orders",
+     "endpoint": "POST /orders",
+     "start_min": 585,
+     "start": "2026-10-05 09:45:00"
+    },
+    {
+     "service": "gateway",
+     "endpoint": "POST /checkout",
+     "start_min": 586,
+     "start": "2026-10-05 09:46:00"
+    }
+   ],
+   "start": "2026-10-05 09:43:00",
+   "end": "2026-10-05 09:52:00"
+  },
+  {
+   "id": "f04-latency_spike",
+   "type": "latency_spike",
+   "service": "gateway",
+   "endpoint": "POST /checkout",
+   "start_min": 743,
+   "end_min": 765,
+   "severity": 3.5108513115506703,
+   "benign": false,
+   "affected": [
+    {
+     "service": "gateway",
+     "endpoint": "POST /checkout",
+     "start_min": 743,
+     "start": "2026-10-05 12:23:00"
+    }
+   ],
+   "start": "2026-10-05 12:23:00",
+   "end": "2026-10-05 12:45:00"
+  },
+  {
+   "id": "f05-traffic_drop",
+   "type": "traffic_drop",
+   "service": "inventory",
+   "endpoint": "GET /stock/{sku}",
+   "start_min": 1059,
+   "end_min": 1115,
+   "severity": 0.5724090625671869,
+   "benign": false,
+   "affected": [
+    {
+     "service": "inventory",
+     "endpoint": "GET /stock/{sku}",
+     "start_min": 1059,
+     "start": "2026-10-05 17:39:00"
+    }
+   ],
+   "start": "2026-10-05 17:39:00",
+   "end": "2026-10-05 18:35:00"
+  },
+  {
+   "id": "f07-latency_drift",
+   "type": "latency_drift",
+   "service": "gateway",
+   "endpoint": "POST /checkout",
+   "start_min": 1491,
+   "end_min": 1630,
+   "severity": 5.658197342989177,
+   "benign": false,
+   "affected": [
+    {
+     "service": "gateway",
+     "endpoint": "POST /checkout",
+     "start_min": 1491,
+     "start": "2026-10-06 00:51:00"
+    }
+   ],
+   "start": "2026-10-06 00:51:00",
+   "end": "2026-10-06 03:10:00"
+  },
+  {
+   "id": "f09-dependency_outage",
+   "type": "dependency_outage",
+   "service": "inventory",
+   "endpoint": "GET /stock/{sku}",
+   "start_min": 1940,
+   "end_min": 1952,
+   "severity": 0.95,
+   "benign": false,
+   "affected": [
+    {
+     "service": "inventory",
+     "endpoint": "GET /stock/{sku}",
+     "start_min": 1940,
+     "start": "2026-10-06 08:20:00"
+    },
+    {
+     "service": "orders",
+     "endpoint": "POST /orders",
+     "start_min": 1942,
+     "start": "2026-10-06 08:22:00"
+    },
+    {
+     "service": "gateway",
+     "endpoint": "POST /checkout",
+     "start_min": 1944,
+     "start": "2026-10-06 08:24:00"
+    }
+   ],
+   "start": "2026-10-06 08:20:00",
+   "end": "2026-10-06 08:32:00"
+  },
+  {
+   "id": "f10-latency_spike",
+   "type": "latency_spike",
+   "service": "gateway",
+   "endpoint": "POST /checkout",
+   "start_min": 2020,
+   "end_min": 2026,
+   "severity": 7.937212089926037,
+   "benign": false,
+   "affected": [
+    {
+     "service": "gateway",
+     "endpoint": "POST /checkout",
+     "start_min": 2020,
+     "start": "2026-10-06 09:40:00"
+    }
+   ],
+   "start": "2026-10-06 09:40:00",
+   "end": "2026-10-06 09:46:00"
+  },
+  {
+   "id": "f11-novel_error",
+   "type": "novel_error",
+   "service": "gateway",
+   "endpoint": "POST /checkout",
+   "start_min": 2093,
+   "end_min": 2195,
+   "severity": 0.00432504224014799,
+   "benign": false,
+   "affected": [
+    {
+     "service": "gateway",
+     "endpoint": "POST /checkout",
+     "start_min": 2093,
+     "start": "2026-10-06 10:53:00"
+    }
+   ],
+   "start": "2026-10-06 10:53:00",
+   "end": "2026-10-06 12:35:00"
+  },
+  {
+   "id": "f12-traffic_drop",
+   "type": "traffic_drop",
+   "service": "orders",
+   "endpoint": "POST /orders",
+   "start_min": 2250,
+   "end_min": 2293,
+   "severity": 0.8256588716902663,
+   "benign": false,
+   "affected": [
+    {
+     "service": "orders",
+     "endpoint": "POST /orders",
+     "start_min": 2250,
+     "start": "2026-10-06 13:30:00"
+    }
+   ],
+   "start": "2026-10-06 13:30:00",
+   "end": "2026-10-06 14:13:00"
+  },
+  {
+   "id": "f13-error_burst",
+   "type": "error_burst",
+   "service": "gateway",
+   "endpoint": "POST /checkout",
+   "start_min": 2553,
+   "end_min": 2560,
+   "severity": 0.11496249357837013,
+   "benign": false,
+   "affected": [
+    {
+     "service": "gateway",
+     "endpoint": "POST /checkout",
+     "start_min": 2553,
+     "start": "2026-10-06 18:33:00"
+    }
+   ],
+   "start": "2026-10-06 18:33:00",
+   "end": "2026-10-06 18:40:00"
+  }
+ ],
+ "benign": [
+  {
+   "id": "b06-deploy",
+   "type": "deploy",
+   "service": "gateway",
+   "endpoint": "GET /products",
+   "start_min": 1388,
+   "end_min": 1393,
+   "severity": 0.0,
+   "benign": true,
+   "affected": [
+    {
+     "service": "gateway",
+     "endpoint": "GET /products",
+     "start_min": 1388,
+     "start": "2026-10-05 23:08:00"
+    }
+   ],
+   "start": "2026-10-05 23:08:00",
+   "end": "2026-10-05 23:13:00"
+  },
+  {
+   "id": "b08-traffic_surge",
+   "type": "traffic_surge",
+   "service": "gateway",
+   "endpoint": "GET /products",
+   "start_min": 1812,
+   "end_min": 1872,
+   "severity": 2.0,
+   "benign": true,
+   "affected": [
+    {
+     "service": "gateway",
+     "endpoint": "GET /products",
+     "start_min": 1812,
+     "start": "2026-10-06 06:12:00"
+    },
+    {
+     "service": "gateway",
+     "endpoint": "POST /checkout",
+     "start_min": 1812,
+     "start": "2026-10-06 06:12:00"
+    },
+    {
+     "service": "orders",
+     "endpoint": "POST /orders",
+     "start_min": 1812,
+     "start": "2026-10-06 06:12:00"
+    },
+    {
+     "service": "orders",
+     "endpoint": "GET /orders/{id}",
+     "start_min": 1812,
+     "start": "2026-10-06 06:12:00"
+    },
+    {
+     "service": "inventory",
+     "endpoint": "GET /stock/{sku}",
+     "start_min": 1812,
+     "start": "2026-10-06 06:12:00"
+    }
+   ],
+   "start": "2026-10-06 06:12:00",
+   "end": "2026-10-06 07:12:00"
+  }
+ ]
+}
